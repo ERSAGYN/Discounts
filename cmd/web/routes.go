@@ -21,10 +21,10 @@ func (app *application) routes() http.Handler {
 	mux.Get("/createShop", dynamicMiddleware.Append(app.requireAuthentication).Append(app.requireAdmin).ThenFunc(app.createShopForm))
 	mux.Post("/createShop", dynamicMiddleware.Append(app.requireAuthentication).Append(app.requireAdmin).ThenFunc(app.createShop))
 
-	mux.Get("/signup", dynamicMiddleware.ThenFunc(app.signupUserForm))
-	mux.Post("/signup", dynamicMiddleware.ThenFunc(app.signupUser))
-	mux.Get("/login", dynamicMiddleware.ThenFunc(app.loginUserForm))
-	mux.Post("/login", dynamicMiddleware.ThenFunc(app.loginUser))
+	mux.Get("/user/signup", dynamicMiddleware.ThenFunc(app.signupUserForm))
+	mux.Post("/user/signup", dynamicMiddleware.ThenFunc(app.signupUser))
+	mux.Get("/user/login", dynamicMiddleware.ThenFunc(app.loginUserForm))
+	mux.Post("/user/login", dynamicMiddleware.ThenFunc(app.loginUser))
 	mux.Post("/user/logout", dynamicMiddleware.Append(app.requireAuthentication).ThenFunc(app.logoutUser))
 
 	fileServer := http.FileServer(http.Dir("./ui/static/"))
