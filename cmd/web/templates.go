@@ -7,4 +7,5 @@ type templateData struct {
 	Form            *forms.Form
 	IsAuthenticated bool
 	Success         string
+	CurrentYear     int
 }
