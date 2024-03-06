@@ -14,21 +14,22 @@ var (
 )
 
 type Product struct {
-	ID          primitive.ObjectID `bson:"_id,omitempty"`
-	ShopID      int                `bson:"shop_id"`
-	ProductName string             `bson:"product_name"`
-	Category    string             `bson:"category"`
-	Price       int                `bson:"price"`
-	Discount    int                `bson:"discount"`
-	Created     time.Time          `bson:"created"`
+	ID primitive.ObjectID `bson:"_id,omitempty"`
+	//ShopID      primitive.ObjectID `bson:"shop_id"`
+	ProductName string    `bson:"product_name"`
+	Category    string    `bson:"category"`
+	Price       int       `bson:"price"`
+	Discount    int       `bson:"discount"`
+	Created     time.Time `bson:"created"`
 }
 
 type Shop struct {
 	ID       primitive.ObjectID `bson:"_id,omitempty"`
-	OwnerID  int                `bson:"owner_id"`
+	OwnerID  primitive.ObjectID `bson:"owner_id"`
 	ShopName string             `bson:"shop_name"`
 	Address  string             `bson:"address"`
 	Created  time.Time          `bson:"created"`
+	Products []Product          `bson:"products"`
 }
 
 type User struct {

@@ -14,14 +14,15 @@
           integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/static/css/style.min.css">
-    <title>Go oh!</title>
+    <title>City Deal</title>
+    <script src="../static/js/script.js"></script>
 </head>
 
 <body>
 <header class="header">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Go Oh!</a>
+            <a class="navbar-brand" href="/">City Deal</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -42,15 +43,18 @@
                     </li>
                 </ul>
                 <form class="d-flex">
-                    <a href="#"><button class="header__btn">Sign Up</button></a>
-                    <a href="#"><button class="header__btn">Sign In</button></a>
-                    <a href="#"><button class="header__btn">Logout</button></a>
+                    <button class="header__btn" type="button" onclick="location.href='/user/signup'">Sign Up</button>
+                    <button class="header__btn" type="button" onclick="location.href='/user/login'">Sign In</button>
+                    <button class="header__btn" type="button" onclick="location.href='/user/logout'">Logout</button>
                 </form>
             </div>
         </div>
     </nav>
 </header>
 
+<main>
+    {{template "content" .}}
+</main>
 
 <footer class="footer" id="footer">
     <!-- <div class="footer__map"></div> -->

@@ -14,10 +14,9 @@ type ProductModel struct {
 	DB *mongo.Database
 }
 
-func (m *ProductModel) Insert(shopID int, productName, category string, price, discount int) error {
+func (m *ProductModel) Insert(shopId primitive.ObjectID, productName, category string, price, discount int) error {
 	collection := m.DB.Collection("products")
 	product := &models.Product{
-		ShopID:      shopID,
 		ProductName: productName,
 		Category:    category,
 		Price:       price,
@@ -37,10 +36,9 @@ func (m *ProductModel) Insert(shopID int, productName, category string, price, d
 	return nil
 }
 
-func (m *ProductModel) GetAll() ([]models.Product, error) {
+func (m *ProductModel) GetAll() ([]*models.Product, error) {
 	collection := m.DB.Collection("products")
 
-	// Fetch all products
 	cursor, err := collection.Find(context.TODO(), bson.D{})
 	if err != nil {
 		log.Println("Error fetching all products:", err)
@@ -48,7 +46,8 @@ func (m *ProductModel) GetAll() ([]models.Product, error) {
 	}
 	defer cursor.Close(context.TODO())
 
-	var products []models.Product
+	products := []*models.Product{}
+
 	if err := cursor.All(context.TODO(), &products); err != nil {
 		log.Println("Error decoding products:", err)
 		return nil, err

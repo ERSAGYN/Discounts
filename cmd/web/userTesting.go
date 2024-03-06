@@ -35,6 +35,22 @@ func test(database *mongo.Database) {
 	}
 	log.Printf("Fetched user by ID: ID=%s, Username=%s, Email=%s, Role=%s, Created=%s",
 		userByID.ID.Hex(), userByID.Username, userByID.Email, userByID.Role, userByID.Created.Format(time.RFC3339))
+	/*shopName := "Test Shop"
+	address := "Test Address"
+	products := []models.Product{
+		{
+			ProductName: "Product 1",
+			Price:       10,
+		},
+		{
+			ProductName: "Product 2",
+			Price:       20,
+		}}
+	shopModel := &mongodb.ShopModel{DB: database}
+	err = shopModel.Insert(userByID.ID, shopName, address, products)
+	if err != nil {
+		log.Printf("Error inserting shop: %v", err)
+	}*/
 
 	// Test case: Authenticate with correct credentials
 	authenticatedUser, err := userModel.Authenticate("test@example.com", "testpassword")

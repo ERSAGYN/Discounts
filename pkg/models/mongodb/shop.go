@@ -14,12 +14,13 @@ type ShopModel struct {
 	DB *mongo.Database
 }
 
-func (m *ShopModel) Insert(ownerID int, shopName, address string) error {
+func (m *ShopModel) Insert(userId primitive.ObjectID, shopName, address string, products []models.Product) error {
 	collection := m.DB.Collection("shops")
 	shop := &models.Shop{
-		OwnerID:  ownerID,
+		OwnerID:  userId,
 		ShopName: shopName,
 		Address:  address,
+		Products: products,
 		Created:  time.Now(),
 	}
 	result, err := collection.InsertOne(context.TODO(), shop)
@@ -31,11 +32,12 @@ func (m *ShopModel) Insert(ownerID int, shopName, address string) error {
 		log.Println("Error inserting shop:", err)
 		return err
 	}
+	shop.OwnerID = result.InsertedID.(primitive.ObjectID)
 	log.Printf("Shop inserted with ID: %v\n", result.InsertedID)
 	return nil
 }
 
-func (m *ShopModel) GetAll() ([]models.Shop, error) {
+func (m *ShopModel) GetAll() ([]*models.Shop, error) {
 	collection := m.DB.Collection("shops")
 
 	// Fetch all shops
@@ -46,7 +48,8 @@ func (m *ShopModel) GetAll() ([]models.Shop, error) {
 	}
 	defer cursor.Close(context.TODO())
 
-	var shops []models.Shop
+	shops := []*models.Shop{}
+
 	if err := cursor.All(context.TODO(), &shops); err != nil {
 		log.Println("Error decoding shops:", err)
 		return nil, err
@@ -72,7 +75,7 @@ func (m *ShopModel) GetByID(id string) (*models.Shop, error) {
 	return &shop, nil
 }
 
-func (m *ShopModel) GetByOwner(ownerID int) ([]models.Shop, error) {
+func (m *ShopModel) GetByOwner(ownerID int) ([]*models.Shop, error) {
 	collection := m.DB.Collection("shops")
 
 	// Fetch shops by owner ID
@@ -83,7 +86,8 @@ func (m *ShopModel) GetByOwner(ownerID int) ([]models.Shop, error) {
 	}
 	defer cursor.Close(context.TODO())
 
-	var shops []models.Shop
+	shops := []*models.Shop{}
+
 	if err := cursor.All(context.TODO(), &shops); err != nil {
 		log.Println("Error decoding shops:", err)
 		return nil, err

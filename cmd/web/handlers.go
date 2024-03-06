@@ -104,17 +104,16 @@ func (app *application) createShop(w http.ResponseWriter, r *http.Request) {
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
 
-	s, err := app.users.GetAll()
+	s, err := app.shops.GetAll()
 	if err != nil {
 		app.serverError(w, err)
 		return
 	}
 
 	app.render(w, r, "home.page.tmpl", &templateData{
-		Users: s,
+		Shops: s,
 	})
 }
-
 func (app *application) signupUserForm(w http.ResponseWriter, r *http.Request) {
 	app.render(w, r, "signup.page.tmpl", &templateData{
 		Form: forms.New(nil),
@@ -138,6 +137,7 @@ func (app *application) signupUser(w http.ResponseWriter, r *http.Request) {
 		app.render(w, r, "signup.page.tmpl", &templateData{Form: form})
 		return
 	}
+
 	err = app.users.Insert(form.Get("name"), form.Get("email"), form.Get("password"))
 	if err != nil {
 		if errors.Is(err, models.ErrDuplicateEmail) {
@@ -152,9 +152,6 @@ func (app *application) signupUser(w http.ResponseWriter, r *http.Request) {
 	app.session.Put(r, "flash", "Your signup was successful. Please log in.")
 
 	http.Redirect(w, r, "/user/login", http.StatusSeeOther)
-	app.render(w, r, "home.page.tmpl", &templateData{
-		Form: forms.New(nil),
-	})
 }
 func (app *application) loginUserForm(w http.ResponseWriter, r *http.Request) {
 	app.render(w, r, "login.page.tmpl", &templateData{
@@ -169,7 +166,7 @@ func (app *application) loginUser(w http.ResponseWriter, r *http.Request) {
 	}
 	form := forms.New(r.PostForm)
 	form.MatchesPattern("email", forms.EmailRX)
-	id, err := app.users.Authenticate(form.Get("email"), form.Get("password"))
+	user, err := app.users.Authenticate(form.Get("email"), form.Get("password"))
 	if err != nil {
 		if errors.Is(err, models.ErrInvalidCredentials) {
 			form.Errors.Add("generic", "Email or Password is incorrect")
@@ -181,7 +178,7 @@ func (app *application) loginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	app.session.Put(r, "authenticatedUserID", id)
+	app.session.Put(r, "authenticatedUserID", user.ID)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 func (app *application) logoutUser(w http.ResponseWriter, r *http.Request) {
