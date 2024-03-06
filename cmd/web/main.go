@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Discounts/pkg/models/mongodb"
 	"context"
 	"fmt"
 	"github.com/golangcollege/sessions"
@@ -16,6 +17,7 @@ type application struct {
 	infoLog       *log.Logger
 	session       *sessions.Session
 	templateCache map[string]*template.Template
+	user          *mongodb.UserModel
 }
 
 func main() {

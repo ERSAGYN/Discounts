@@ -2,9 +2,27 @@ package main
 
 import (
 	"Discounts/pkg/forms"
+	"Discounts/pkg/models"
 	"errors"
 	"net/http"
 )
+
+func (app *application) home(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func (app *application) showMyShops(w http.ResponseWriter, r *http.Request) {
+
+}
+func (app *application) showShop(w http.ResponseWriter, r *http.Request) {
+
+}
+func (app *application) createProduct(w http.ResponseWriter, r *http.Request) {
+
+}
+func (app *application) createShop(w http.ResponseWriter, r *http.Request) {
+
+}
 
 func (app *application) signupUserForm(w http.ResponseWriter, r *http.Request) {
 	app.render(w, r, "signup.page.tmpl", &templateData{
@@ -29,7 +47,7 @@ func (app *application) signupUser(w http.ResponseWriter, r *http.Request) {
 		app.render(w, r, "signup.page.tmpl", &templateData{Form: form})
 		return
 	}
-	err = app.users.Insert(form.Get("name"), form.Get("email"), form.Get("password"))
+	err = app.user.Insert(form.Get("name"), form.Get("email"), form.Get("password"))
 	if err != nil {
 		if errors.Is(err, models.ErrDuplicateEmail) {
 			form.Errors.Add("email", "Address is already in use")
@@ -58,7 +76,7 @@ func (app *application) loginUser(w http.ResponseWriter, r *http.Request) {
 	}
 	form := forms.New(r.PostForm)
 	form.MatchesPattern("email", forms.EmailRX)
-	id, err := app.users.Authenticate(form.Get("email"), form.Get("password"))
+	id, err := app.user.Authenticate(form.Get("email"), form.Get("password"))
 	if err != nil {
 		if errors.Is(err, models.ErrInvalidCredentials) {
 			form.Errors.Add("generic", "Email or Password is incorrect")
