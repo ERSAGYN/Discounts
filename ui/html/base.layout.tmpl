@@ -25,19 +25,25 @@
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="second.html"> Another Link</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#">Some Link</a>
                     </li>
+                    {{if .IsAdmin}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Create Shop</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="">Create Product</a>
+                        </li>
+                    {{end}}
+
                 </ul>
                 <form class="d-flex">
+                    {{if .Authenticated}}
+                    <a href="#"><button class="header__btn">Logout</button></a>
+                    {{else}}
                     <a href="#"><button class="header__btn">Sign Up</button></a>
                     <a href="#"><button class="header__btn">Sign In</button></a>
-                    <a href="#"><button class="header__btn">Logout</button></a>
+                    {{end}}
                 </form>
             </div>
         </div>

@@ -1,1 +1,148 @@
-nav{position:fixed;width:100%;height:50px;background-color:#212121;z-index:5}.header__btn{background:#384685;border-radius:5px;border:none;width:75px;height:36px;margin-right:10px}.shops{margin-top:35px}.shops__text{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.shops__price{font-size:25px;line-height:32px;color:#000;padding-bottom:13px}.shops__price span{text-decoration:line-through;color:#bdbdbd;font-size:18px;padding-right:10px}.btn{text-align:center}.footer{margin-top:50px;min-height:630px;position:relative}.footer__info{position:absolute;top:0;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%);width:460px;height:270px;background-color:#163269;padding:50px 68px 60px 68px}.footer__addr{margin-bottom:36px;color:#fff;font-size:20px;line-height:20px;font-weight:500;text-align:center}.footer__phone{display:block;color:#fff;font-size:20px;line-height:20px;font-weight:700;margin-bottom:38px;text-align:center}.footer__phone:hover{color:#fff}.footer__social-item{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:50px;height:50px;border:2px solid #fff;border-radius:100%;margin:0 15px}.footer__social-item img{height:27px}.footer__social{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center}/*# sourceMappingURL=style.min.css.map */
+nav {
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    background-color: #212121;
+    z-index: 5
+}
+
+.header__btn {
+    background: #384685;
+    border-radius: 5px;
+    border: none;
+    width: 75px;
+    height: 36px;
+    margin-right: 10px
+}
+
+.shops {
+    margin-top: 35px
+}
+
+.shops__text {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: flex-end
+}
+
+.shops__price {
+    font-size: 25px;
+    line-height: 32px;
+    color: #000;
+    padding-bottom: 13px
+}
+
+.shops__price span {
+    text-decoration: line-through;
+    color: #bdbdbd;
+    font-size: 18px;
+    padding-right: 10px
+}
+
+.btn {
+    text-align: center
+}
+
+form {
+    margin-top: 20px
+}
+
+.form-label {
+    margin-bottom: 5px;
+    font-weight: bold
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    outline: none
+}
+
+.footer {
+    margin-top: 50px;
+    min-height: 630px;
+    position: relative
+}
+
+.footer__info {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 460px;
+    height: 270px;
+    background-color: #163269;
+    padding: 50px 68px 60px 68px
+}
+
+.footer__addr {
+    margin-bottom: 36px;
+    color: #fff;
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 500;
+    text-align: center
+}
+
+.footer__phone {
+    display: block;
+    color: #fff;
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 700;
+    margin-bottom: 38px;
+    text-align: center
+}
+
+.footer__phone:hover {
+    color: #fff
+}
+
+.footer__social-item {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border: 2px solid #fff;
+    border-radius: 100%;
+    margin: 0 15px
+}
+
+.footer__social-item img {
+    height: 27px
+}
+
+.footer__social {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+/*# sourceMappingURL=style.min.css.map */
