@@ -8,20 +8,102 @@ import (
 )
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
-
+	app.render(w, r, "home.page.tmpl", nil)
 }
 
 func (app *application) showMyShops(w http.ResponseWriter, r *http.Request) {
+	// Retrieve the shops associated with the currently logged-in user
+	shops, err := app.shop.GetByOwner(app.session.GetInt(r, "authenticatedUserID"))
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
 
+	// Render a template displaying those shops
+	app.render(w, r, "myshops.page.tmpl", &templateData{
+		Shops: shops,
+	})
 }
-func (app *application) showShop(w http.ResponseWriter, r *http.Request) {
 
+// Implement your show shop handler
+func (app *application) showShop(w http.ResponseWriter, r *http.Request) {
+	id := r.URL.Query().Get(":id")
+	shop, err := app.shop.GetByID(id)
+	if err != nil {
+		if errors.Is(err, models.ErrNoRecord) {
+			app.notFound(w)
+		} else {
+			app.serverError(w, err)
+		}
+		return
+	}
+	app.render(w, r, "shop.page.tmpl", &templateData{Shop: shop})
+}
+
+// Implement your create product form handler
+func (app *application) createProductForm(w http.ResponseWriter, r *http.Request) {
+	app.render(w, r, "create_product.page.tmpl", nil)
 }
 func (app *application) createProduct(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		app.clientError(w, http.StatusBadRequest)
+		return
+	}
 
+	form := forms.New(r.PostForm)
+	form.Required("productName", "category", "price", "discount")
+	form.MinLength("productName", 3)
+	form.MaxLength("productName", 255)
+	form.MinLength("category", 3)
+	form.MaxLength("category", 255)
+
+	if !form.Valid() {
+		app.render(w, r, "create_product_form.page.tmpl", &templateData{
+			Form: form,
+		})
+		return
+	}
+
+	// Process form data and save the product to the database
+	// You'll need to access form values like r.PostForm.Get("fieldname")
+
+	// Redirect the user after saving the product
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
-func (app *application) createShop(w http.ResponseWriter, r *http.Request) {
 
+// Implement your create shop form handler
+func (app *application) createShopForm(w http.ResponseWriter, r *http.Request) {
+	app.render(w, r, "create_shop.page.tmpl", nil)
+}
+
+// Implement your create shop handler
+func (app *application) createShop(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		app.clientError(w, http.StatusBadRequest)
+		return
+	}
+
+	form := forms.New(r.PostForm)
+	form.Required("shopName", "address")
+	form.MinLength("shopName", 3)
+	form.MaxLength("shopName", 255)
+	form.MinLength("address", 3)
+	form.MaxLength("address", 255)
+
+	if !form.Valid() {
+		app.render(w, r, "create_shop_form.page.tmpl", &templateData{
+			Form: form,
+		})
+		return
+	}
+
+	// Process form data and save the shop to the database
+	// You'll need to access form values like r.PostForm.Get("fieldname")
+
+	// Redirect the user after saving the shop
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func (app *application) signupUserForm(w http.ResponseWriter, r *http.Request) {
