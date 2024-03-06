@@ -43,9 +43,12 @@
                     </li>
                 </ul>
                 <form class="d-flex">
-                    <button class="header__btn" type="button" onclick="location.href='/user/signup'">Sign Up</button>
-                    <button class="header__btn" type="button" onclick="location.href='/user/login'">Sign In</button>
+                    {{if .IsAuthenticated}}
                     <button class="header__btn" type="button" onclick="location.href='/user/logout'">Logout</button>
+                    {{else}}
+                        <button class="header__btn" type="button" onclick="location.href='/user/signup'">Sign Up</button>
+                        <button class="header__btn" type="button" onclick="location.href='/user/login'">Sign In</button>
+                    {{end}}
                 </form>
             </div>
         </div>

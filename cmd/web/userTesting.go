@@ -25,17 +25,17 @@ func test(database *mongo.Database) {
 		log.Printf("Failed to get all users: %v", err)
 	}
 	for i, user := range users {
-		log.Printf("User %d: ID=%s, Username=%s, Email=%s, Role=%s, Created=%s",
-			i+1, user.ID.Hex(), user.Username, user.Email, user.Role, user.Created.Format(time.RFC3339))
+		log.Printf("User %d: ID=%d, Username=%s, Email=%s, Role=%s, Created=%s",
+			i+1, user.ID, user.Username, user.Email, user.Role, user.Created.Format(time.RFC3339))
 	}
-	log.Printf(users[0].ID.Hex())
+	log.Print(users[0].ID)
 	userByID, err := userModel.GetByID("65e70f157d38634495c2893f")
 	if err != nil {
 		log.Printf("Failed to get user by ID: %v", err)
 	}
-	log.Printf("Fetched user by ID: ID=%s, Username=%s, Email=%s, Role=%s, Created=%s",
-		userByID.ID.Hex(), userByID.Username, userByID.Email, userByID.Role, userByID.Created.Format(time.RFC3339))
-	/*shopName := "Test Shop"
+	log.Printf("Fetched user by ID: ID=%d, Username=%s, Email=%s, Role=%s, Created=%s",
+		userByID.ID, userByID.Username, userByID.Email, userByID.Role, userByID.Created.Format(time.RFC3339))
+	shopName := "Test Shop"
 	address := "Test Address"
 	products := []models.Product{
 		{
@@ -50,7 +50,7 @@ func test(database *mongo.Database) {
 	err = shopModel.Insert(userByID.ID, shopName, address, products)
 	if err != nil {
 		log.Printf("Error inserting shop: %v", err)
-	}*/
+	}
 
 	// Test case: Authenticate with correct credentials
 	authenticatedUser, err := userModel.Authenticate("test@example.com", "testpassword")
@@ -59,7 +59,7 @@ func test(database *mongo.Database) {
 	}
 
 	log.Printf("Authenticated user: ID=%s, Username=%s, Email=%s, Role=%s, Created=%s",
-		authenticatedUser.ID.Hex(), authenticatedUser.Username, authenticatedUser.Email,
+		authenticatedUser.ID, authenticatedUser.Username, authenticatedUser.Email,
 		authenticatedUser.Role, authenticatedUser.Created.Format(time.RFC3339))
 
 	if authenticatedUser.Username != "testuser" {

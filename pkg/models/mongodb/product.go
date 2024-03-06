@@ -14,9 +14,11 @@ type ProductModel struct {
 	DB *mongo.Database
 }
 
-func (m *ProductModel) Insert(shopId primitive.ObjectID, productName, category string, price, discount int) error {
+func (m *ProductModel) Insert(id int, productName, category string, price, discount int) error {
 	collection := m.DB.Collection("products")
+
 	product := &models.Product{
+		ID:          id,
 		ProductName: productName,
 		Category:    category,
 		Price:       price,

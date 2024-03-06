@@ -14,8 +14,9 @@ type ShopModel struct {
 	DB *mongo.Database
 }
 
-func (m *ShopModel) Insert(userId primitive.ObjectID, shopName, address string, products []models.Product) error {
+func (m *ShopModel) Insert(userId int, shopName, address string, products []models.Product) error {
 	collection := m.DB.Collection("shops")
+
 	shop := &models.Shop{
 		OwnerID:  userId,
 		ShopName: shopName,
@@ -32,15 +33,13 @@ func (m *ShopModel) Insert(userId primitive.ObjectID, shopName, address string, 
 		log.Println("Error inserting shop:", err)
 		return err
 	}
-	shop.OwnerID = result.InsertedID.(primitive.ObjectID)
-	log.Printf("Shop inserted with ID: %v\n", result.InsertedID)
+	log.Printf("Shop inserted with ID:\n", result.InsertedID.(primitive.ObjectID))
 	return nil
 }
 
 func (m *ShopModel) GetAll() ([]*models.Shop, error) {
 	collection := m.DB.Collection("shops")
 
-	// Fetch all shops
 	cursor, err := collection.Find(context.TODO(), bson.D{})
 	if err != nil {
 		log.Println("Error fetching all shops:", err)
@@ -115,3 +114,67 @@ func (m *ShopModel) GetCreated(created time.Time) ([]models.Shop, error) {
 
 	return shops, nil
 }
+
+func (m *ShopModel) AddProducts(shopID primitive.ObjectID, newProducts []models.Product) error {
+	collection := m.DB.Collection("shops")
+
+	// Find the existing shop
+	var existingShop models.Shop
+	err := collection.FindOne(context.TODO(), bson.D{{"_id", shopID}}).Decode(&existingShop)
+	if err != nil {
+		log.Println("Error fetching existing shop:", err)
+		return err
+	}
+
+	// Find the highest existing ID in the products array
+	maxProductID := 0
+	for _, product := range existingShop.Products {
+		if product.ID > maxProductID {
+			maxProductID = product.ID
+		}
+	}
+
+	// Increment the ID for the new products
+	nextProductID := maxProductID + 1
+
+	// Increment the ID for each new product
+	for i := range newProducts {
+		newProducts[i].ID = nextProductID
+		nextProductID++
+	}
+
+	// Append new products to the existing shop's products array
+	existingShop.Products = append(existingShop.Products, newProducts...)
+
+	// Update the existing shop with the new products
+	_, err = collection.UpdateOne(
+		context.TODO(),
+		bson.D{{"_id", shopID}},
+		bson.D{{"$set", bson.D{{"products", existingShop.Products}}}},
+	)
+	if err != nil {
+		log.Println("Error updating existing shop:", err)
+		return err
+	}
+
+	log.Printf("Products added to shop with ID: %v\n", shopID)
+	return nil
+}
+
+/*var maxIDResult struct {
+	ID int `bson:"id"`
+}
+err := collection.FindOne(context.TODO(), bson.D{}, &options.FindOneOptions{
+	Sort: bson.D{{"id", -1}},
+}).Decode(&maxIDResult)
+
+if err != nil && err != mongo.ErrNoDocuments {
+	log.Println("Error finding max product ID:", err)
+	return err
+}
+
+// Use the next available ID
+nextID := 1
+if maxIDResult.ID > 0 {
+	nextID = maxIDResult.ID + 1
+}*/
