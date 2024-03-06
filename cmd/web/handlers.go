@@ -13,11 +13,11 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 
 func (app *application) showMyShops(w http.ResponseWriter, r *http.Request) {
 	// Retrieve the shops associated with the currently logged-in user
-	shops, err := app.shop.GetByOwner(app.session.GetInt(r, "authenticatedUserID"))
-	if err != nil {
-		app.serverError(w, err)
-		return
-	}
+	//shops, err := app.shop.GetByOwner(app.session.GetInt(r, "authenticatedUserID"))
+	//if err != nil {
+	//	app.serverError(w, err)
+	//	return
+	//}
 
 	// Render a template displaying those shops
 	//app.render(w, r, "myshops.page.tmpl", &templateData{
