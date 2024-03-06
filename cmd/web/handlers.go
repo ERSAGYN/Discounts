@@ -20,9 +20,9 @@ func (app *application) showMyShops(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Render a template displaying those shops
-	app.render(w, r, "myshops.page.tmpl", &templateData{
-		Shops: shops,
-	})
+	//app.render(w, r, "myshops.page.tmpl", &templateData{
+	//	Shops: shops,
+	//})
 }
 
 // Implement your show shop handler

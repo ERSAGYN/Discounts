@@ -1,27 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/css/style.min.css">
-    <title>Go Oh!</title>
-</head>
-<body>
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Go Oh!</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-=======
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"
+          integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"
+          integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/static/css/style.min.css">
     <title>Go oh!</title>
 </head>
 
@@ -32,65 +23,34 @@
             <a class="navbar-brand" href="#">Go Oh!</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
->>>>>>> nbmdaka
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-<<<<<<< HEAD
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user/signup">Signup</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user/login">Login</a>
-                    </li>
-                </ul>
-                 <form class="d-flex">
-                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                     <button class="btn btn-outline-success" type="submit">Search</button>
-                 </form>
-=======
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#"> Another Link</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Some Link</a>
                     </li>
-                    {{if .IsAdmin}}
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Create Shop</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" href="">Create Product</a>
-                        </li>
-                    {{end}}
-
                 </ul>
                 <form class="d-flex">
-                    {{if .Authenticated}}
-                    <a href="#"><button class="header__btn">Logout</button></a>
-                    {{else}}
                     <a href="#"><button class="header__btn">Sign Up</button></a>
                     <a href="#"><button class="header__btn">Sign In</button></a>
-                    {{end}}
+                    <a href="#"><button class="header__btn">Logout</button></a>
                 </form>
->>>>>>> nbmdaka
             </div>
         </div>
     </nav>
 </header>
 
-<section class="content">
-    {{block "content" .}}
-    {{end}}
-</section>
 
-<<<<<<< HEAD
-<footer class="footer">
-    <div class="container">
-=======
 <footer class="footer" id="footer">
     <!-- <div class="footer__map"></div> -->
     <iframe
@@ -98,23 +58,10 @@
             width="100%" height="630" style="border: 0" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
     <div class="footer__info">
->>>>>>> nbmdaka
         <address class="footer__addr">Mangilik El C1</address>
         <a class="footer__phone" href="email:somemail@gmail.com">somemail@gmail.com</a>
         <a class="footer__phone" href="tel:84999228974">8 (499) 922-89-74</a>
         <div class="footer__social">
-<<<<<<< HEAD
-            <a href="#" class="footer__social-item"><img src="icons/facebook.svg" alt="facebook"></a>
-            <a href="#" class="footer__social-item"><img src="icons/instagram.svg" alt="instagram"></a>
-            <a href="#" class="footer__social-item"><img src="icons/youtube.svg" alt="pinterest"></a>
-        </div>
-    </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</body>
-</html>
-=======
             <a href="#" class="footer__social-item"><img src="/static/icons/facebook.svg" alt="facebook" /></a>
             <a href="#" class="footer__social-item"><img src="/static/icons/instagram.svg" alt="instagram" /></a>
             <a href="#" class="footer__social-item"><img src="/static/icons/youtube.svg" alt="pinterest" /></a>
@@ -124,7 +71,22 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"
+        integrity="sha512-HGOnQO9+SP1V92SrtZfjqxxtLmVzqZpjFFekvzZVWoiASSQgSr4cw9Kqd2+l8Llp4Gm0G8GIFJ4ddwZilcdb8A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+    $('.autoplay').slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        dots: true,
+        focusOnSelect: true
+    });
+</script>
 </body>
 
 </html>
->>>>>>> nbmdaka
