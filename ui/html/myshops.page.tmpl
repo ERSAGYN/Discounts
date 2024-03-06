@@ -1,0 +1,39 @@
+{{ define "base" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Shops</title>
+   
+</head>
+<body>
+    <header>
+        <h1>My Shops</h1>
+    </header>
+    <main>
+        {{ template "content" . }}
+    </main>
+    <footer>
+        <p>&copy; 2024 My Shops</p>
+    </footer>
+</body>
+</html>
+{{ end }}
+
+{{ define "content" }}
+<div>
+    {{ if .Shops }}
+        <ul>
+            {{ range .Shops }}
+                <li>
+                    <a href="/shop/{{ .ID }}">{{ .Name }}</a>
+                    <!-- You can display other shop details here -->
+                </li>
+            {{ end }}
+        </ul>
+    {{ else }}
+        <p>No shops found.</p>
+    {{ end }}
+</div>
+{{ end }}
