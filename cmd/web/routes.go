@@ -15,10 +15,14 @@ func (app *application) routes() http.Handler {
 	mux.Get("/myshops", dynamicMiddleware.Append(app.requireAuthentication).ThenFunc(app.showMyShops))
 	mux.Get("/shop/:id", dynamicMiddleware.ThenFunc(app.showShop))
 
-	mux.Get("/createProduct", dynamicMiddleware.Append(app.requireAuthentication).ThenFunc(app.createProductForm))
+	mux.Get("/createProduct", dynamicMiddleware.Append(app.requireAuthentication).ThenFunc(app.createProduct))
 	mux.Post("/createProduct", dynamicMiddleware.Append(app.requireAuthentication).ThenFunc(app.createProduct))
 
-	mux.Get("/createShop", dynamicMiddleware.Append(app.requireAuthentication).Append(app.requireAdmin).ThenFunc(app.createShopForm))
+	mux.Get("/createShop", dynamicMiddleware.Append(app.requireAuthentication).Append(app.requireAdmin).ThenFunc(app.createShop))
+	mux.Get("/createProduct", dynamicMiddleware.Append(app.requireAuthentication).ThenFunc(app.createProduct))
+	mux.Post("/createProduct", dynamicMiddleware.Append(app.requireAuthentication).ThenFunc(app.createProduct))
+
+	mux.Get("/createShop", dynamicMiddleware.Append(app.requireAuthentication).Append(app.requireAdmin).ThenFunc(app.createShop))
 	mux.Post("/createShop", dynamicMiddleware.Append(app.requireAuthentication).Append(app.requireAdmin).ThenFunc(app.createShop))
 
 	mux.Get("/user/signup", dynamicMiddleware.ThenFunc(app.signupUserForm))
