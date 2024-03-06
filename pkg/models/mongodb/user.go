@@ -43,7 +43,7 @@ func (m *UserModel) Insert(username, email, password string) error {
 
 }
 
-func (m *UserModel) GetAll() ([]models.User, error) {
+func (m *UserModel) GetAll() ([]*models.User, error) {
 	collection := m.DB.Collection("users")
 
 	// Fetch all users
@@ -54,7 +54,8 @@ func (m *UserModel) GetAll() ([]models.User, error) {
 	}
 	defer cursor.Close(context.TODO())
 
-	var users []models.User
+	users := []*models.User{}
+
 	if err := cursor.All(context.TODO(), &users); err != nil {
 		log.Println("Error decoding users:", err)
 		return nil, err

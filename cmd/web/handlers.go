@@ -7,17 +7,13 @@ import (
 	"net/http"
 )
 
-func (app *application) home(w http.ResponseWriter, r *http.Request) {
-	app.render(w, r, "home.page.tmpl", nil)
-}
-
 func (app *application) showMyShops(w http.ResponseWriter, r *http.Request) {
 	// Retrieve the shops associated with the currently logged-in user
-	shops, err := app.shop.GetByOwner(app.session.GetInt(r, "authenticatedUserID"))
-	if err != nil {
-		app.serverError(w, err)
-		return
-	}
+	//shops, err := app.shops.GetByOwner(app.session.GetInt(r, "authenticatedUserID"))
+	//if err != nil {
+	//	app.serverError(w, err)
+	//	return
+	//}
 
 	// Render a template displaying those shops
 	//app.render(w, r, "myshops.page.tmpl", &templateData{
@@ -28,7 +24,7 @@ func (app *application) showMyShops(w http.ResponseWriter, r *http.Request) {
 // Implement your show shop handler
 func (app *application) showShop(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get(":id")
-	shop, err := app.shop.GetByID(id)
+	shop, err := app.shops.GetByID(id)
 	if err != nil {
 		if errors.Is(err, models.ErrNoRecord) {
 			app.notFound(w)
@@ -106,6 +102,19 @@ func (app *application) createShop(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
+func (app *application) home(w http.ResponseWriter, r *http.Request) {
+
+	s, err := app.users.GetAll()
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
+	app.render(w, r, "home.page.tmpl", &templateData{
+		Users: s,
+	})
+}
+
 func (app *application) signupUserForm(w http.ResponseWriter, r *http.Request) {
 	app.render(w, r, "signup.page.tmpl", &templateData{
 		Form: forms.New(nil),
@@ -129,7 +138,7 @@ func (app *application) signupUser(w http.ResponseWriter, r *http.Request) {
 		app.render(w, r, "signup.page.tmpl", &templateData{Form: form})
 		return
 	}
-	err = app.user.Insert(form.Get("name"), form.Get("email"), form.Get("password"))
+	err = app.users.Insert(form.Get("name"), form.Get("email"), form.Get("password"))
 	if err != nil {
 		if errors.Is(err, models.ErrDuplicateEmail) {
 			form.Errors.Add("email", "Address is already in use")
@@ -160,7 +169,7 @@ func (app *application) loginUser(w http.ResponseWriter, r *http.Request) {
 	}
 	form := forms.New(r.PostForm)
 	form.MatchesPattern("email", forms.EmailRX)
-	id, err := app.user.Authenticate(form.Get("email"), form.Get("password"))
+	id, err := app.users.Authenticate(form.Get("email"), form.Get("password"))
 	if err != nil {
 		if errors.Is(err, models.ErrInvalidCredentials) {
 			form.Errors.Add("generic", "Email or Password is incorrect")

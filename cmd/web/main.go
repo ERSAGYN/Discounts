@@ -21,20 +21,22 @@ type application struct {
 	infoLog       *log.Logger
 	session       *sessions.Session
 	templateCache map[string]*template.Template
-	user          *mongodb.UserModel
-	shop          *mongodb.ShopModel
-	product       *mongodb.ProductModel
+	users         *mongodb.UserModel
+	products      *mongodb.ProductModel
+	shops         *mongodb.ShopModel
 }
 
 func main() {
+	secret := flag.String("secret", "s6Ndh+pPbnzHbS*+9Pk8qGWhTzbpa@ge", "Secret key")
 	addr := flag.String("addr", ":4000", "HTTP network address")
-	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
-	errorLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		log.Fatal(err)
 	}
+	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	errorLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+
 	// Check the connection
 	err = client.Ping(context.TODO(), nil)
 	if err != nil {
@@ -43,16 +45,28 @@ func main() {
 
 	fmt.Println("Connected to MongoDB!")
 
-	database := client.Database("discounts")
+	templateCache, err := newTemplateCache("./ui/html/")
+	if err != nil {
+		errorLog.Fatal(err)
+	}
 
+	session := sessions.New([]byte(*secret))
+	session.Lifetime = 12 * time.Hour
+	session.Secure = true
+
+	database := client.Database("discounts")
+	app := &application{
+		errorLog:      errorLog,
+		infoLog:       infoLog,
+		session:       session,
+		users:         &mongodb.UserModel{DB: database},
+		products:      &mongodb.ProductModel{DB: database},
+		shops:         &mongodb.ShopModel{DB: database},
+		templateCache: templateCache,
+	}
 	index := mongo.IndexModel{
 		Keys:    bson.D{{Key: "email", Value: 1}},
 		Options: options.Index().SetUnique(true),
-	}
-
-	templateCache, err := newTemplateCache("./ui/html")
-	if err != nil {
-		errorLog.Fatal(err)
 	}
 
 	_, err = database.Collection("users").Indexes().CreateOne(context.TODO(), index)
@@ -61,25 +75,19 @@ func main() {
 	}
 
 	test(database)
-
-	defer client.Disconnect(context.TODO())
-
-	app := &application{
-		errorLog:      errorLog,
-		infoLog:       infoLog,
-		templateCache: templateCache,
-	}
-
 	srv := &http.Server{
-		Addr:         *addr,
-		ErrorLog:     errorLog,
-		Handler:      app.routes(),
-		IdleTimeout:  time.Minute,
-		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 10 * time.Second,
+		Addr:           *addr,
+		MaxHeaderBytes: 524288,
+		ErrorLog:       errorLog,
+		Handler:        app.routes(),
+		IdleTimeout:    time.Minute,
+		ReadTimeout:    5 * time.Second,
+		WriteTimeout:   10 * time.Second,
 	}
-	infoLog.Printf("Starting server on https://127.0.0.1%s", *addr)
-	err = srv.ListenAndServeTLS("./tls/cert.pem", "./tls/key.pem")
+
+	infoLog.Printf("Starting server on %s", *addr)
+	err = srv.ListenAndServe()
+	defer client.Disconnect(context.TODO())
 	errorLog.Fatal(err)
 
 }
