@@ -61,7 +61,9 @@ func (app *application) signupUser(w http.ResponseWriter, r *http.Request) {
 	app.session.Put(r, "flash", "Your signup was successful. Please log in.")
 
 	http.Redirect(w, r, "/user/login", http.StatusSeeOther)
-
+	app.render(w, r, "home.page.tmpl", &templateData{
+		Form: forms.New(nil),
+	})
 }
 func (app *application) loginUserForm(w http.ResponseWriter, r *http.Request) {
 	app.render(w, r, "login.page.tmpl", &templateData{
