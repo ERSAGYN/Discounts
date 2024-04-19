@@ -89,7 +89,7 @@ func (app *application) createShop(w http.ResponseWriter, r *http.Request) {
 	form.MaxLength("address", 255)
 
 	if !form.Valid() {
-		app.render(w, r, "create_shop_form.page.tmpl", &templateData{
+		app.render(w, r, "create_shop.page.tmpl", &templateData{
 			Form: form,
 		})
 		return
@@ -99,7 +99,6 @@ func (app *application) createShop(w http.ResponseWriter, r *http.Request) {
 	// You'll need to access form values like r.PostForm.Get("fieldname")
 
 	// Redirect the user after saving the shop
-	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {

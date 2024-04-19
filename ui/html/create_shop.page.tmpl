@@ -1,41 +1,19 @@
-<!-- create_shop.page.tmpl -->
-{{ define "base" }}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Shop</title>
-
-</head>
-<body>
-    <header>
-        <h1>Create New Shop</h1>
-    </header>
-    <main>
-        {{ template "content" . }}
-    </main>
-    <footer>
-        <p>&copy; 2024 Your Company</p>
-    </footer>
-</body>
-</html>
-{{ end }}
-
 {{ define "content" }}
-<div>
-    <form action="/createShop" method="post">
-        <div>
-            <label for="shopName">Shop Name:</label><br>
-            <input type="text" id="shopName" name="shopName" required><br>
-        </div>
-        <div>
-            <label for="address">Address:</label><br>
-            <input type="text" id="address" name="address" required><br>
-        </div>
-        <div>
-            <button type="submit">Create Shop</button>
-        </div>
-    </form>
-</div>
+hello from this page!
+<!--<div>-->
+<!--    <form action="/shop/create" method="post">-->
+<!--        <div>-->
+<!--            <label for="shopName">Shop Name:</label><br>-->
+<!--            <input type="text" id="shopName" name="shopName" required><br>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label for="address">Address:</label><br>-->
+<!--            <input type="text" id="address" name="address" required><br>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <button type="submit">Create Shop</button>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
 {{ end }}
+
